@@ -30,7 +30,6 @@
 		}
 	%>
 
-
 	<!-- Contenido -->
 	<div class="container" id="contenedor-principal">
 		<h2>Identificación de usuario</h2>
