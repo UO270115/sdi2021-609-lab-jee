@@ -47,6 +47,11 @@ public class ServletCarrito extends HttpServlet {
 		if (producto != null) {
 			insertarEnCarrito(carrito, producto); // y mostramos el contenido del mismo
 		}
+		
+		// Retornar la vista con parámetro "carrito"
+		request.setAttribute("paresCarrito", carrito);
+		getServletContext().getRequestDispatcher("/vista-carrito.jsp").forward(request,
+		response);
 
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html");
