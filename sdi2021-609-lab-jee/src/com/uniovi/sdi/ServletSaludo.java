@@ -24,7 +24,6 @@ public class ServletSaludo extends HttpServlet {
 	 */
 	public ServletSaludo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -35,6 +34,7 @@ public class ServletSaludo extends HttpServlet {
 			throws ServletException, IOException {
 		// response.getWriter().append("Served at: ").append(request.getContextPath());
 		response.setContentType("text/html");
+		
 		PrintWriter out = response.getWriter();
 		out.println("<HTML>");
 		out.println("<HEAD><TITLE>Hola Mundo!</TITLE></HEAD>");
