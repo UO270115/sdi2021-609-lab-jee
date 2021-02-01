@@ -40,7 +40,7 @@ public class ServletCarrito extends HttpServlet {
 		// No hay carrito (nuevo usuario), creamos uno y lo insertamos en sesión
 		if (carrito == null) {
 			carrito = new ConcurrentHashMap<String, Integer>(); // nombre, número de unidades compradas del producto
-			request.getSession().setAttribute("carrito", carrito);
+			session.setAttribute("carrito", carrito);
 		}
 
 		String producto = request.getParameter("producto");
