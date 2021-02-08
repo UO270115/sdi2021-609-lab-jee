@@ -5,7 +5,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-	<title>JSP</title>
+	<title>BLOG</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet"
@@ -17,19 +17,35 @@
 </head>
 <body>
 	
+	<jsp:useBean id="contador" class="com.uniovi.sdi.Contador"
+		scope="application" />
+	<jsp:setProperty name="contador" property="incremento" value="1" />
+
+	<!-- Barra de Navegación superior -->
+	<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<ul class="nav navbar-nav">
+			<li><a href="comentar.jsp">Comentar</a></li>
+			<li><a href="vista-comentarios.jsp">Blog</a></li>
+		</ul>
+		<div class="nav navbar-right">
+			<jsp:getProperty name="contador" property="total" />
+			Visitas
+		</div>
+	</div>
+	</nav>
+
+	<jsp:useBean id="blogService" class="com.uniovi.sdi.BlogService" />
+
 	<!-- Contenido -->
 	<div class="container" id="contenedor-principal">
-		<h2>Vista-Carrito</h2>
+		<h2>Vista-Comentarios</h2>
 		<ul>
-			<c:forEach var="par" items="${paresCarrito}">
+			<c:forEach var="comentario" items="${blogService.comentarios}">
 				<tr>
-					<li>${par.key}- ${par.value}
-						<a
-							href="borrarProductoDelCarrito?producto=<c:out value="${par.key}"/>"
-							class="btn btn-default">
-							Eliminar unidad
-						</a>
-					</li>
+					<li>${comentario.nombre}
+						<br>
+						${comentario.comentario}</li>
 				</tr>
 			</c:forEach>
 		</ul>
