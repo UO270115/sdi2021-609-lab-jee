@@ -50,7 +50,7 @@ public class ProfessorController {
 	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Professor professor) {
 		professor.setId(id);
 		professorsService.addProfessor(professor);
-		return "redirect:/professor/edit/" + id;
+		return "redirect:/professor/details/" + id;
 	}
 
 	@RequestMapping("/professor/delete/{id}")
