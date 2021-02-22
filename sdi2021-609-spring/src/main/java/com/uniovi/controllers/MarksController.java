@@ -3,7 +3,8 @@ package com.uniovi.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.uniovi.entities.Mark;
 import com.uniovi.services.MarksService;
 import com.uniovi.services.UsersService;
+import com.uniovi.validators.MarksValidator;
 
 @Controller
 public class MarksController {
@@ -21,6 +23,9 @@ public class MarksController {
 	@Autowired
 	private UsersService usersService;
 
+	@Autowired
+	private MarksValidator marksValidator;
+
 	@RequestMapping("/mark/list")
 	public String getList(Model model) {
 		model.addAttribute("markList", marksService.getMarks());
@@ -28,9 +33,19 @@ public class MarksController {
 	}
 
 	@RequestMapping(value = "/mark/add", method = RequestMethod.POST)
-	public String setMark(@ModelAttribute Mark mark) {
+	public String setMark(@Validated Mark mark, BindingResult result) {
+		marksValidator.validate(mark, result);
+		if(result.hasErrors()) {
+			return "mark/add";
+		}
 		marksService.addMark(mark);
 		return "redirect:/mark/list";
+	}
+	
+	@RequestMapping(value = "/mark/add", method = RequestMethod.GET)
+	public String setMark(Model model) {
+		model.addAttribute("mark", new Mark());
+		return "mark/add";
 	}
 
 	@RequestMapping(value = "/mark/add")
@@ -58,14 +73,35 @@ public class MarksController {
 		return "mark/edit";
 	}
 
+//	@RequestMapping(value = "/mark/edit/{id}", method = RequestMethod.POST)
+//	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Mark mark) {
+//		Mark original = marksService.getMark(id);
+//		// modificar solo score y description
+//		original.setScore(mark.getScore());
+//		original.setDescription(mark.getDescription());
+//		marksService.addMark(original);
+//		return "redirect:/mark/details/" + id;
+//	}
+	
 	@RequestMapping(value = "/mark/edit/{id}", method = RequestMethod.POST)
-	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Mark mark) {
-		Mark original = marksService.getMark(id); 
+	public String setEdit(@PathVariable Long id, @Validated Mark mark, BindingResult result) {
+		marksValidator.validate(mark, result);
+		if(result.hasErrors()) {
+			return "/mark/edit";
+		}
+		
+		Mark original = marksService.getMark(mark.getId());
 		// modificar solo score y description
 		original.setScore(mark.getScore());
 		original.setDescription(mark.getDescription());
 		marksService.addMark(original);
 		return "redirect:/mark/details/" + id;
+	}
+	
+	@RequestMapping(value = "/mark/edit", method = RequestMethod.GET)
+	public String setEdit(Model model) {
+		model.addAttribute("mark", new Mark());
+		return "redirect:/mark/edit";
 	}
 
 	@RequestMapping("/mark/list/update")
