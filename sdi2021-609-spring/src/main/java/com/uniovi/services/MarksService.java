@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Mark;
@@ -47,23 +49,12 @@ public class MarksService {
 		marksRepository.deleteById(id);
 	}
 
-	/*
-	 * private List<Mark> marksList = new LinkedList<Mark>();
-	 * 
-	 * @PostConstruct public void init() { marksList.add(new Mark(1L, "Ejercicio 1",
-	 * 10.0)); marksList.add(new Mark(2L, "Ejercicio 2", 9.0)); }
-	 * 
-	 * public List<Mark> getMarks() { return marksList; }
-	 * 
-	 * public Mark getMark(Long id) { return marksList.stream().filter(mark ->
-	 * mark.getId().equals(id)).findFirst().get(); }
-	 * 
-	 * public void addMark(Mark mark) { // Si en Id es null le asignamos el ultimo +
-	 * 1 de la lista if (mark.getId() == null) {
-	 * mark.setId(marksList.get(marksList.size() - 1).getId() + 1); }
-	 * marksList.add(mark); }
-	 * 
-	 * public void deleteMark(Long id) { marksList.removeIf(mark ->
-	 * mark.getId().equals(id)); }
-	 */
+	public void setMarkResend(boolean revised, Long id) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String dni = auth.getName();
+		Mark mark = marksRepository.findById(id).get();
+		if (mark.getUser().getDni().equals(dni)) {
+			marksRepository.updateResend(revised, id);
+		}
+	}
 }
