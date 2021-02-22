@@ -26,14 +26,16 @@
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="/mark/list">Ver Notas</a></li>
-					<li><a href="/mark/add">Agregar Nota</a></li>
-					<li><a href="/mark/filter">Filtrar</a></li>
+					<li class="active"><a href="/mark/list"
+						th:text="#{listMarks.message}">Ver Notas</a></li>
+					<li><a href="/mark/add" th:text="#{addMark.message}">Agregar
+							Nota</a></li>
+					<li><a href="/mark/filter" th:text="#{filter.message}">Filtrar</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/registrarse"><span
-							class="glyphicon glyphicon-user"></span> Registrate</a></li>
-					<li><a href="/identificarse"><span
+					<li><a href="/singup" th:text="#{signup.message}"><span
+							class="glyphicon glyphicon-user"></span> Regístrate</a></li>
+					<li><a href="/login" th:text="#{login.message}"><span
 							class="glyphicon glyphicon-log-in"></span> Identifícate</a></li>
 				</ul>
 			</div>
@@ -43,18 +45,18 @@
 
 
 	<div class="container">
-		<h2>Detalles de la nota</h2>
+		<h2 th:text="#{markDetails.message}">Detalles de la nota</h2>
 		<div class="panel panel-default">
-			<div class="panel-heading">DNI</div>
+			<div class="panel-heading" th:text="#{dni.message}">DNI</div>
 			<div class="panel-body" th:text="${mark.user.dni}">28276</div>
 		</div>
 		<div class="panel panel-default">
-			<div class="panel-heading">Descripción</div>
+			<div class="panel-heading" th:text="#{description.message}">Descripción</div>
 			<div class="panel-body" th:text="${mark.description}">
 				Ejercicio 1</div>
 		</div>
 		<div class="panel panel-default">
-			<div class="panel-heading">Puntuación</div>
+			<div class="panel-heading" th:text="#{score.message}">Puntuación</div>
 			<div class="panel-body" th:text="${mark.score}">100</div>
 		</div>
 	</div>

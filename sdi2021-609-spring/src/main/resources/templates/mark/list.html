@@ -26,14 +26,16 @@
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="/mark/list">Ver Notas</a></li>
-					<li><a href="/mark/add">Agregar Nota</a></li>
-					<li><a href="/mark/filter">Filtrar</a></li>
+					<li class="active"><a href="/mark/list"
+						th:text="#{listMarks.message}">Ver Notas</a></li>
+					<li><a href="/mark/add" th:text="#{addMark.message}">Agregar
+							Nota</a></li>
+					<li><a href="/mark/filter" th:text="#{filter.message}">Filtrar</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/registrarse"><span
-							class="glyphicon glyphicon-user"></span> Registrate</a></li>
-					<li><a href="/identificarse"><span
+					<li><a href="/singup" th:text="#{signup.message}"><span
+							class="glyphicon glyphicon-user"></span> Regístrate</a></li>
+					<li><a href="/login" th:text="#{login.message}"><span
 							class="glyphicon glyphicon-log-in"></span> Identifícate</a></li>
 				</ul>
 			</div>
@@ -43,10 +45,11 @@
 
 
 	<div class="container">
-		<h2>Notas</h2>
-		<p>Las notas que actualmente figuran en el sistema son las
-			siguientes:</p>
-		<button type="button" id="updateButton" class="btn btn-default">Actualizar</button>
+		<h2 th:text="#{marksAlone.message}">Notas</h2>
+		<p th:text="#{marksSaved.message}">Las notas que actualmente
+			figuran en el sistema son las siguientes:</p>
+		<button type="button" id="updateButton" class="btn btn-default"
+			th:text="#{update.message}">Actualizar</button>
 		<script>
 			$("#updateButton").click(function() {
 				$("#tableMarks").load('/mark/list/update');
@@ -58,8 +61,8 @@
 				<thead>
 					<tr>
 						<th class="col-md-1">id</th>
-						<th>Descripción</th>
-						<th>Puntuación</th>
+						<th th:text="#{description.message}">Descripción</th>
+						<th th:text="#{score.message}">Puntuación</th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
@@ -70,9 +73,12 @@
 						<td th:text="${mark.id}">1</td>
 						<td th:text="${mark.description}">Ejercicio 1</td>
 						<td th:text="${mark.score}">10</td>
-						<td><a th:href="${'/mark/details/' + mark.id}">detalles</a></td>
-						<td><a th:href="${'/mark/edit/' + mark.id}">modificar</a></td>
-						<td><a th:href="${'/mark/delete/' + mark.id}">eliminar</a></td>
+						<td><a th:href="${'/mark/details/' + mark.id}"
+							th:text="#{details.message}">detalles</a></td>
+						<td><a th:href="${'/mark/edit/' + mark.id}"
+							th:text="#{modify.message}">modificar</a></td>
+						<td><a th:href="${'/mark/delete/' + mark.id}"
+							th:text="#{delete.message}">eliminar</a></td>
 					</tr>
 				</tbody>
 			</table>
