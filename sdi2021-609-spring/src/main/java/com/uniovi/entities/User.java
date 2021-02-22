@@ -103,4 +103,12 @@ public class User {
 		return this.name + " " + this.lastName;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 }
