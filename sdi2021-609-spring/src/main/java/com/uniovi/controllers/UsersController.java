@@ -66,20 +66,23 @@ public class UsersController {
 		return "user/edit";
 	}
 
-	@RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)
-	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute User user) {
-		user.setId(id);
-		usersService.addUser(user);
-		return "redirect:/user/details/" + id;
+	@RequestMapping(value = "/user/edit", method = RequestMethod.POST)
+	public String setEdit(Model model, @ModelAttribute User user) {
+		User original = usersService.getUser(user.getId());
+		// modificar solo nombre y apellidos
+		original.setName(user.getName());
+		original.setLastName(user.getLastName());
+		usersService.addUser(original);
+		return "redirect:/user/details/" + user.getId();
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(@Validated User user, BindingResult result) {
 		signUpFormValidator.validate(user, result);
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return "signup";
 		}
-		
+
 		usersService.addUser(user);
 		securityService.autoLogin(user.getDni(), user.getPasswordConfirm());
 		return "redirect:home";
@@ -98,6 +101,17 @@ public class UsersController {
 		User activeUser = usersService.getUserByDni(dni);
 		model.addAttribute("markList", activeUser.getMarks());
 		return "home";
+	}
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(Model model) {
+		return "login";
+	}
+	
+	@RequestMapping("/user/list/update")
+	public String updateList(Model model) {
+		model.addAttribute("userList", usersService.getUsers());
+		return "user/list :: tableUsers";
 	}
 
 }
