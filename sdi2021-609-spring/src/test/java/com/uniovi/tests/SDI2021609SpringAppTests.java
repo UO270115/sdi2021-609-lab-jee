@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_HomeView;
+import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_View;
@@ -53,7 +54,6 @@ public class SDI2021609SpringAppTests {
 	// Antes de la primera prueba
 	@BeforeClass
 	static public void begin() {
-		// PR01();
 
 	}// Al finalizar la última prueba
 
@@ -93,7 +93,7 @@ public class SDI2021609SpringAppTests {
 		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "77777778A", "Josefo", "Perez", "77777", "77777");
 		// Comprobamos que entramos en la sección privada
-		PO_View.checkElement(driver, "text", "Notas del usuario");
+		PO_View.checkElement(driver, "text", "Notas de usuario");
 	}
 
 	// PR06. Prueba del formulario de registro. DNI repetido en la BD, Nombre corto,
@@ -137,7 +137,69 @@ public class SDI2021609SpringAppTests {
 				"77777777777777777777777777777");
 		// Comprobamos el error de contraseña largo.
 		PO_RegisterView.checkKey(driver, "Error.signup.password.length", PO_Properties.getSPANISH());
+	}
 
+	// PR07. Loguearse con exito desde el ROl de Usuario, 99999990D, 123456
+	@Test
+	public void PR07() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "99999990A", "123456");
+		// COmprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "Notas del usuario");
+	}
+
+	// PR08. Identificación válida con usuario de ROL profesor (99999993D/123456).
+	@Test
+	public void PR08() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "99999993D", "123456");
+		// COmprobamos que entramos en la pagina privada de Profesor
+		PO_View.checkElement(driver, "text", "Notas del usuario");
+	}
+
+	// PR09. Identificación válida con usuario de ROL Administrador
+	// (99999988F/123456).
+	@Test
+	public void PR09() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "99999988F", "123456");
+		// COmprobamos que entramos en la pagina privada de Administrador
+		PO_View.checkElement(driver, "text", "Notas del usuario");
+	}
+
+	// PR10. Identificación inválida con usuario de ROL alumno (99999990A/123456).
+	// Este usuario hace login adecuadamente, el error del test occure porque no encuentra
+	// el "text" en la página, no sé porque.
+	@Test
+	public void PR10() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "99999988F", "123456");
+		// COmprobamos que entramos en la pagina privada de Administrador
+		PO_View.checkElement(driver, "text", "Notas de usuario");
+	}
+
+	// PR11. Identificación válida y desconexión con usuario de ROL usuario
+	// (99999990A/123456)..
+	@Test
+	public void PR11() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "99999990A", "123456");
+		// COmprobamos que entramos en la pagina privada de Administrador
+		PO_View.checkElement(driver, "text", "Notas del usuario");
+		// desconectar la sesión con el usuario que ha hecho login
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		// nos redirige a la página inicial para hacer login
+		PO_View.checkElement(driver, "text", "Identifícate");
 	}
 
 	@AfterClass
