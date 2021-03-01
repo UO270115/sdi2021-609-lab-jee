@@ -34,6 +34,17 @@
 						<li><a href="/user/list" th:text="#{listUsers.message}">Ver
 								Usuarios</a></li>
 					</ul></li>
+				<li id="professors-menu" class="dropdown"><a
+					class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
+						class="caret"></span> Gestión de Profesores
+				</a>
+					<ul class="dropdown-menu">
+						<li class="active"><a href="/professor/list">Ver
+								Profesores</a></li>
+						<li><a sec:authorize="hasRole('ROLE_ADMIN')"
+							href="/professor/add">Agregar Profesor</a></li>
+					</ul></li>
+			</ul>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a id="btnLanguage" href=" #"
