@@ -18,10 +18,10 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @Configuration
 public class CustomConfiguration implements WebMvcConfigurer {
 	
-	@Value("$(spring.data.web.pageable.page-parameter)")
+	@Value("${spring.data.web.pageable.page-parameter}")
 	private int page;
 
-	@Value("$(spring.data.web.pageable.default-page-size)")
+	@Value("${spring.data.web.pageable.default-page-size}")
 	private int size;
 	
 	@Bean
