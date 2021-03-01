@@ -66,7 +66,8 @@
 				$("#tableMarks").load('/mark/list/update');
 			});
 		</script>
-		<div th:replace="fragments/tableMarks"></div>
+		<div th:replace="fragments/tableMarks" th:fragment="tableMarks"
+			id="tableMarks"></div>
 		<footer th:replace="fragments/pagination" />
 	</div>
 

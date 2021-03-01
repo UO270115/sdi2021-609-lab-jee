@@ -14,7 +14,19 @@
 			<b th:inline="text">[[${#httpServletRequest.remoteUser}]]</b>
 		</p>
 		<p th:text="#{marks.message}">Notas del usuario</p>
-		<div th:replace="fragments/tableMarks"></div>
+		<button type="button" id="updateButton" class="btn btn-default"
+			th:text="#{update.message}">Actualizar</button>
+		<script th:inline="javascript"> 
+			/*<![CDATA[*/
+				$( "#updateButton" ).click(function() { var numberPage = [[${param.page}]]; var urlUpdate = '/mark/list/update'; if (numberPage != null ){ urlUpdate += "?page="+numberPage[0]; } $("#tableMarks").load(urlUpdate);
+			}); /*]]>*/
+		<script>
+			$("#updateButton").click(function() {
+				$("#tableMarks").load('/mark/list/update');
+			});
+		</script>
+		<div th:replace="fragments/tableMarks" th:fragment="tableMarks"
+			id="tableMarks"></div>
 		<footer th:replace="fragments/footer" />
 </body>
 </html>
