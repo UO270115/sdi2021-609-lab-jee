@@ -1,5 +1,7 @@
 package com.uniovi.tests.pageobjects;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,7 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 import com.uniovi.tests.util.SeleniumUtils;
 
 public class PO_PrivateView extends PO_NavView {
-	
+
 	static public void fillFormAddMark(WebDriver driver, int userOrder, String descriptionp, String scorep) {
 		// Esperamos 5 segundo a que carge el DOM porque en algunos equipos falla
 		SeleniumUtils.esperarSegundos(driver, 5);
@@ -25,5 +27,31 @@ public class PO_PrivateView extends PO_NavView {
 		By boton = By.className("btn");
 		driver.findElement(boton).click();
 	}
-	
+
+	public static void login(WebDriver driver, String dni, String password) {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, dni, password);
+		// COmprobamos que entramos en la pagina privada del usuario
+		//PO_View.checkElement(driver, "text", "dni");
+	}
+
+	public static void logout(WebDriver driver) {
+		// Ahora nos desconectamos
+		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
+	}
+
+	public static List<WebElement> clickMenuOption(WebDriver driver, String menuId, String optionHref) {
+		// Pinchamos en la opción de menu de Notas: //li[contains(@id, 'marks-menu')]/a
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, '" + menuId + "')]/a");
+		elementos.get(0).click();
+		// Esperamos a aparezca la opción de añadir nota: //a[contains(@href,
+		// 'mark/add')]
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '" + optionHref + "')]");
+		// Pinchamos en agregar Nota.
+		elementos.get(0).click();
+		return elementos;
+	}
+
 }
