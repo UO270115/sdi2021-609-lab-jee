@@ -33,6 +33,14 @@ public class ProfessorValidator implements Validator {
 		} catch (NumberFormatException nfe) {
 			errors.rejectValue("dni", "Error.professor.dni.letter");
 		}
+		String nombre = professor.getNombre();
+		if(nombre.length() < 5 || nombre.length() > 24) {
+			errors.rejectValue("nombre", "Error.professor.name.length");
+		}
+		String categoria = professor.getCategoria();
+		if(categoria.length() < 5 || categoria.length() > 24) {
+			errors.rejectValue("categoria", "Error.professor.categoria.length");
+		}
 	}
 
 }

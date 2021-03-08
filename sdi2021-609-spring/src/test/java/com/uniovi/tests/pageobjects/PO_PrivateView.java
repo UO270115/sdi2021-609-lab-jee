@@ -34,12 +34,13 @@ public class PO_PrivateView extends PO_NavView {
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, dni, password);
 		// COmprobamos que entramos en la pagina privada del usuario
-		//PO_View.checkElement(driver, "text", "dni");
+		// PO_View.checkElement(driver, "text", "dni");
 	}
 
 	public static void logout(WebDriver driver) {
 		// Ahora nos desconectamos
-		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
+		PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
+		PO_LoginView.checkKey(driver, "login.message", PO_Properties.getSPANISH());
 	}
 
 	public static List<WebElement> clickMenuOption(WebDriver driver, String menuId, String optionHref) {
@@ -52,6 +53,34 @@ public class PO_PrivateView extends PO_NavView {
 		// Pinchamos en agregar Nota.
 		elementos.get(0).click();
 		return elementos;
+	}
+
+	static public void fillFormAddProfessor(WebDriver driver, String dnip, String nombrep, String apellidosp,
+			String categoriap) {
+		// Esperamos 5 segundos a que carge el DOM porque en algunos equipos falla
+		SeleniumUtils.esperarSegundos(driver, 5);
+		// Rellenemos el campo de dni
+		WebElement dni = driver.findElement(By.name("dni"));
+		dni.click();
+		dni.clear();
+		dni.sendKeys(dnip);
+		// Rellenemos el campo de nombre
+		WebElement nombre = driver.findElement(By.name("nombre"));
+		nombre.click();
+		nombre.clear();
+		nombre.sendKeys(nombrep);
+		// Rellenemos el campo de apellidos
+		WebElement apellidos = driver.findElement(By.name("apellidos"));
+		apellidos.click();
+		apellidos.clear();
+		apellidos.sendKeys(apellidosp);
+		// Rellenemos el campo de categoria
+		WebElement categoria = driver.findElement(By.name("categoria"));
+		categoria.click();
+		categoria.clear();
+		categoria.sendKeys(categoriap);
+		By boton = By.className("btn");
+		driver.findElement(boton).click();
 	}
 
 }
